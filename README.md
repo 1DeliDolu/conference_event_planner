@@ -1,39 +1,52 @@
 # Conference Event Planner
 
-Lightweight React + Vite application for estimating conference/event costs.
+A small React + Vite application to estimate conference/event costs by selecting venues, AV add-ons, and catering options. State is managed with Redux Toolkit.
 
-This project provides a simple UI to select venues, add-ons (projector, microphone, speakers, etc.), and catering options, and calculates subtotals and total cost in real time using Redux Toolkit for state management.
+---
 
-**Tech stack**
+## Overview
 
-- React (JSX)
-- Vite (dev server & build)
-- Redux Toolkit + React Redux (state management)
+This repository contains a client-side React application that lets users select venue rooms, AV equipment, and meal options and shows subtotals and a final total. The app uses Redux slices for venue, AV, and meal state and is bootstrapped with Vite.
 
-## Key features
+## Features
 
 - Venue selection with quantity controls
-- Add-on selection (AV equipment) and per-item costs
-- Meal options with guest counts
-- Live subtotal and total cost calculation
-- State organized into Redux slices (`avSlice.js`, `mealsSlice.js`, `venueSlice.js`)
+- AV add-ons (projector, speakers, microphones, etc.) with adjustable quantities
+- Meal selection with configurable number of people
+- Live subtotal and total calculations
+- State organized in Redux slices (`venueSlice`, `avSlice`, `mealsSlice`)
 
-## Repo layout (important files)
+## Tech stack
 
-- [src/main.jsx](src/main.jsx) — app bootstrap
-- [src/App.jsx](src/App.jsx) — top-level app container
-- [src/ConferenceEvent.jsx](src/ConferenceEvent.jsx) — main feature UI
-- [src/TotalCost.jsx](src/TotalCost.jsx) — total/summary view
-- [src/store.js](src/store.js) — Redux store setup
-- [src/avSlice.js](src/avSlice.js), [src/mealsSlice.js](src/mealsSlice.js), [src/venueSlice.js](src/venueSlice.js) — state slices
-- [src/assets/](src/assets) — static images and assets
+- JavaScript (ESM) + React
+- Vite (dev server, build)
+- Redux Toolkit + React Redux
+- ESLint for linting
+
+## Repository structure (key files)
+
+```
+.
+├─ index.html
+├─ package.json
+├─ LICENSE
+├─ src/
+│  ├─ main.jsx           # app bootstrap (ReactDOM + Provider)
+│  ├─ App.jsx            # top-level UI (Get Started + container)
+│  ├─ ConferenceEvent.jsx# main product selection UI
+│  ├─ TotalCost.jsx      # summary / totals component
+│  ├─ store.js           # Redux store configuration
+│  ├─ venueSlice.js      # venue state and reducers
+│  ├─ avSlice.js         # AV add-ons state and reducers
+│  ├─ mealsSlice.js      # meal options state and reducers
+│  └─ assets/            # images
+```
 
 ## Prerequisites
 
-- Node.js (16+) or compatible
-- npm (or pnpm/yarn, adapt commands)
+- Node.js and npm (project uses `package.json` so Node/npm is required).
 
-## Install
+## Quickstart
 
 1. Install dependencies
 
@@ -47,133 +60,81 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (usually http://localhost:5173).
+Vite will print the local dev URL in the terminal; open the URL it prints to view the app.
 
-## Available npm scripts
+## Local development
 
-- `npm run dev` — start Vite dev server
-- `npm run build` — build production files to `dist`
-- `npm run preview` — build and run local preview server
-- `npm run lint` — run ESLint checks
-- `npm run deploy` — publish `dist` to GitHub Pages (requires `gh-pages` setup)
+Install: `npm install`
 
-These scripts come from the project's `package.json`.
+Run (dev): `npm run dev`
 
-## How it works (brief)
+Build (production): `npm run build`
 
-- The UI is composed of React components in `src/` that dispatch actions to Redux slices.
-- Each slice manages its part of the app state (venue, AV add-ons, meals).
-- The `TotalCost`/summary component reads slice state and computes totals for display.
+Preview production build locally: `npm run preview` (the script runs `vite build` then `vite preview --host`)
 
-## Development tips
+### Environment / configuration
 
-- Inspect `src/ConferenceEvent.jsx` to understand the selection flows and event handlers.
-- Slice files contain the add/remove/update logic — extend them if you add new item types.
-- Keep UI state (visibility, local toggles) in component state; persist shared selections in Redux.
+No environment variable files (e.g. `.env`, `.env.example`) were found in the repository. The app is client-only and does not require server-side configuration based on checked files.
+
+## Testing
+
+There are no test scripts or test framework configuration in this repository (no `test` script in `package.json` and no `__tests__` or similar test folders). If you want unit or integration tests, add a test runner (Jest, Vitest, etc.) and test scripts.
+
+## Linting / Formatting
+
+The project includes an ESLint script in `package.json`:
+
+```bash
+npm run lint
+```
+
+The lint script runs: `eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0` (from `package.json`).
+
+## Docker
+
+No Dockerfile or Docker Compose configuration was found in the repository.
+
+## Kubernetes / OpenShift
+
+No Kubernetes/OpenShift manifests were found.
+
+## CI/CD
+
+No GitHub Actions or other CI configuration files were found under `.github/workflows`.
+
+## API Documentation
+
+The app is purely client-side; there are no server endpoints or API routes in this repository.
+
+## Troubleshooting
+
+- If the dev server fails to start, ensure Node and npm are installed and that `node_modules` were installed with `npm install`.
+- If the port is already in use, Vite will attempt another port — check the terminal output for the effective URL.
 
 ## Contributing
 
-- Open an issue for feature requests or bugs.
-- Fork the repo, make a branch, and open a pull request with a clear description.
+- Fork the repository, create a branch, and open a pull request with a clear description and tests (if applicable).
+- Open an issue to discuss larger changes before implementing them.
+
+## Security
+
+- No security policy (`SECURITY.md`) was found. For security concerns, open an issue or contact the repository maintainers.
 
 ## License
 
-This repository includes a `LICENSE` file — follow the terms specified there.
+This project is licensed under the Apache License 2.0. See the `LICENSE` file in the repository for details.
 
 ---
 
-If you'd like, I can also:
+## Assumptions / TODO (items not verifiable from repo)
 
-- run the dev server and confirm the app loads;
-- add a short Usage section with screenshots or example flows;
-- set up a simple deployment workflow.
+- Tests: no test framework or test scripts found. (Checked: `package.json`, `src/`.)
+- Environment variables: no `.env` or config files present; the app appears client-side only. (Checked: repo root.)
+- CI/CD: no GitHub Actions workflows were found under `.github/workflows`.
+- Docker: no Dockerfile or docker-compose.yml present.
+- Contributing docs: no `CONTRIBUTING.md` or `CODE_OF_CONDUCT.md` found.
 
-# 🧩 Uygulama Projesi: Konferans Gider Planlayıcı
-
-**Tahmini gereken süre:** 90 dakika
-
----
-
-## 🧠 Görevi anlayın
-
-Alejandre, iş konferansları için bir mekân yönetir. Ana şirketi **“BudgetEase”** , BudgetEase müşterilerinin konferans etkinliklerini kolayca fiyatlandırabilmesi için bir web sitesi geliştirmeniz üzere sizi işe almak istiyor.
-
-Uygulamanın gereksinimleri; kullanıcıların konferans merkezindeki odaları seçip fiyatlandırabilmesini, mikrofon ve projektör gibi _eklentileri (add-ons)_ seçebilmesini ve belirli sayıda misafir için yemekleri seçebilmesini içerir.
-
-**BudgetEase konferans gider planlayıcısının** özellikleri şunları içerecektir:
-
-- Kullanıcı seçimlerine göre gerçek zamanlı güncellenen dinamik bir kullanıcı arayüzü
-- Mekân seçimi, eklentiler ve yemek seçenekleri için bileşenler
-- Durum değişikliklerini yönetmek için _Redux Toolkit_ kullanılarak _Redux_ entegrasyonu
-- Farklı bölüm durumlarını yönetmek için _Redux slices_
-- Seçilen öğeleri ve maliyetlerini açılır bir pencerede tablo ile gösterme
-- Kullanıcı seçimlerine göre ara toplamları ve genel toplam maliyeti hesaplama ve gösterme
-
----
-
-## 🎯 Öğrenme hedefleri
-
-Bu laboratuvarı tamamladıktan sonra şunları yapabileceksiniz:
-
-- **React bileşenleri oluşturma:** Bileşen birleştirme ve iç içe yerleştirme kullanarak fonksiyonel React bileşenleri oluşturma.
-- **Hook’larla durum yönetimi:** Özellikle _useState_ ve _useEffect_ hook’larını uygulama. Hook’ları, bileşen düzeyi durumu yönetmek ve öğelerin görünürlüğünü kontrol etmek için kullanacaksınız.
-- **Redux entegrasyonu:** Eylemler ( _actions_ ), azaltıcılar ( _reducers_ ) ve store gibi Redux kavramlarını kullanarak bir uygulamaya Redux entegre etme.
-- **Dinamik veriyi render etme:** Nesne dizilerinden alınan verileri arayüzde dinamik olarak render etme. Bileşen listeleri üretmek için diziler üzerinde _map()_ ile dolaşacaksınız.
-- **Koşullu render ile olay yönetimi:** Düğme seçimi gibi kullanıcı olaylarını yönetme ve karşılık gelen eylemleri tetikleme.
-
----
-
-## 🧾 Proje görevleri
-
-1. Proje ortamını kurun
-2. _ConferenceEvent.jsx_ bileşeninin yapısını inceleyin
-3. _Venue_ modülünün kodunu inceleyin
-4. Güncellemeleri ve durum değişikliklerini yönetmek için Redux’u bileşenlerle birleştirin
-5. Ara toplamları ve toplam maliyeti hesaplayan mantığı ekleyin
-6. Seçilen ürünleri göstermek için dinamik bir tablo oluşturun; öğe adı, birim maliyet, miktar ve o öğe için toplam maliyeti görüntüleyin
-7. Konforlu bir kullanıcı deneyimi için web tasarımı oluşturun
-8. Web sitenizi herkese açık bir barındırma hizmetine dağıtın
-
----
-
-## 🧩 Çözümler
-
-Çözüm kodunu bu laboratuvarın sonunda bulacaksınız. Görevlerden herhangi birini tamamlamakta yardıma ihtiyacınız olursa, orada çalışan kodun önerilen bir sürümünü bulabilirsiniz. Ayrıca, kendi çözümünüzü veya laboratuvarın sonundaki kodu kaydettiğinizden emin olun. Bu, nihai proje için kod geliştirirken size yardımcı olacaktır.
-
----
-
-## ✅ Ön koşullar
-
-- Temel HTML ve CSS
-- Orta düzey JavaScript
-- React fonksiyon bileşenleri, hook’lar ve durum yönetimi için _Redux toolkit_ ile aşinalık
-- GitHub kullanarak kod yönetimi
-
-GitHub’da nasıl çalışılacağıyla ilgili yönlendirmeye ihtiyacınız olursa bu talimatları inceleyin.
-
----
-
-## ⚠️ Bu laboratuvar ortamıyla ilgili önemli bildirim
-
-_Skills Network Cloud IDE_ (Theia ve Docker tabanlı), kurs ve proje laboratuvarlarında uygulamalı çalışmalar için ortam sağlayan açık kaynaklı bir IDE’dir ( _Integrated Development Environment_ ).
-
-Bu laboratuvar ortamındaki oturumların kalıcı olmadığını lütfen unutmayın. Bu laboratuvara her bağlandığınızda, sizin için yeni bir ortam oluşturulur. Kodunuzu GitHub’a veya başka bir harici kaynağa kaydetmeden ortamdan çıkarsanız verilerinizi kaybedersiniz. Veri kaybını önlemek için bu laboratuvarları tek bir oturumda tamamlamayı planlayın.
-
----
-
-# 🧰 Görev 1: Ortamı kurma
-
-## 🧷 1. Depoyu fork’layın
-
-React uygulamanız için GitHub deposunu fork’lamanız gerekir. Bu proje için iskelet kodun bulunduğu GitHub deposu şuradadır:
-
-[https://github.com/ibm-developer-skills-network/conference_event_planner.git](https://github.com/ibm-developer-skills-network/conference_event_planner.git)
-
-Yukarıdaki bağlantıyı takip ettikten sonra **fork** düğmesine tıklayın.
-
-Bu depo, bu laboratuvar için React uygulamasının temel yerleşimini içerir.
-
-## 🧬 2. Depoyu klonlayın
+If you want, I can add any of the above (basic tests, CI workflow, Dockerfile, or CONTRIBUTING docs). I can also run the dev server and verify the app loads locally — tell me which action you'd like next.
 
 Depoyu **git clone `<repository-link>`** komutunu kullanarak klonlayın.
 
